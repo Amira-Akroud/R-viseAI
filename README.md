@@ -1,2 +1,2 @@
 # R-viseAI
-App de révision avec IA — React + Express + React Native
+App de révision avec IA — React + Express 
