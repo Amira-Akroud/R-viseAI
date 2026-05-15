@@ -4,30 +4,41 @@ import './App.css'
 function App() {
   const [file, setFile] = useState(null)
   const [isQuizMode, setIsQuizMode] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
   const [currentQuestion, setCurrentQuestion] = useState(0)
   const [score, setScore] = useState(0)
   const [showResult, setShowResult] = useState(false)
-  const [selectedAnswer, setSelectedAnswer] = useState(null) // كيعقل على الجواب اللي تختار
+  const [selectedAnswer, setSelectedAnswer] = useState(null)
+  const [questions, setQuestions] = useState([])
 
-  const mockQuestions = [
-    { q: "Qu'est-ce qu'une variable ?", options: ["Un conteneur", "Un fichier", "Un écran"], ans: "Un conteneur" },
-    { q: "React est-il une librairie ?", options: ["Oui", "Non", "Peut-être"], ans: "Oui" },
-    { q: "JSX signifie quoi ?", options: ["JavaScript XML", "Java Syntax", "JSON X"], ans: "JavaScript XML" }
-  ]
+  const handleUpload = async () => {
+    if (!file) return alert("Sélectionnez un fichier d'abord !")
+    
+    setIsLoading(true) // كيبدا الـ Loading
+
+    // محاكاة للوقت اللي كياخدو الـ AI (مثلا 3 ثواني)
+    setTimeout(() => {
+      // هنا غادي نحطو من بعد الكود اللي كيجيب الأسئلة من الـ Backend
+      const fetchedQuestions = [
+        { q: "Qu'est-ce qu'une variable ?", options: ["Un conteneur", "Un fichier", "Un écran"], ans: "Un conteneur" },
+        { q: "React est-il une librairie ?", options: ["Oui", "Non", "Peut-être"], ans: "Oui" },
+        { q: "JSX signifie quoi ?", options: ["JavaScript XML", "Java Syntax", "JSON X"], ans: "JavaScript XML" }
+      ]
+      setQuestions(fetchedQuestions)
+      setIsLoading(false) // كيسالي الـ Loading
+      setIsQuizMode(true)
+    }, 3000) 
+  }
 
   const handleAnswer = (opt) => {
-    setSelectedAnswer(opt) // كنبينو التصحيح أولاً
-    
-    if (opt === mockQuestions[currentQuestion].ans) {
-      setScore(score + 1)
-    }
+    setSelectedAnswer(opt)
+    if (opt === questions[currentQuestion].ans) setScore(score + 1)
 
-    // كنتسناو ثانية وحدة (1000ms) باش يشوف التصحيح عاد كيدوز للسؤال التالي
     setTimeout(() => {
       const nextQuestion = currentQuestion + 1
-      if (nextQuestion < mockQuestions.length) {
+      if (nextQuestion < questions.length) {
         setCurrentQuestion(nextQuestion)
-        setSelectedAnswer(null) // كنمسحو الاختيار للسؤال الجديد
+        setSelectedAnswer(null)
       } else {
         setShowResult(true)
       }
@@ -38,13 +49,22 @@ function App() {
     setFile(null); setIsQuizMode(false); setCurrentQuestion(0); setScore(0); setShowResult(false); setSelectedAnswer(null);
   }
 
+  if (isLoading) {
+    return (
+      <div className="container">
+        <div className="loader"></div>
+        <p>L'IA analyse votre PDF et génère le quiz...</p>
+      </div>
+    )
+  }
+
   if (!isQuizMode) {
     return (
       <div className="container">
         <h1>R-viseAI</h1>
         <div className="card">
           <input type="file" accept=".pdf" onChange={(e) => setFile(e.target.files[0])} />
-          <button onClick={() => file ? setIsQuizMode(true) : alert("PDF d'abord!")} className="btn-main">Générer le Quiz</button>
+          <button onClick={handleUpload} className="btn-main">Générer le Quiz</button>
         </div>
       </div>
     )
@@ -55,29 +75,22 @@ function App() {
       {showResult ? (
         <div className="card">
           <h2>Résultat Final</h2>
-          <div className="score-big">{score} / {mockQuestions.length}</div>
+          <div className="score-big">{score} / {questions.length}</div>
           <button onClick={reset} className="btn-main">Recommencer</button>
         </div>
       ) : (
         <div className="card">
-          <div className="progress">Question {currentQuestion + 1} sur {mockQuestions.length}</div>
-          <h3>{mockQuestions[currentQuestion].q}</h3>
+          <div className="progress">Question {currentQuestion + 1} sur {questions.length}</div>
+          <h3>{questions[currentQuestion].q}</h3>
           <div className="options">
-            {mockQuestions[currentQuestion].options.map(opt => {
-              // تحديد لون الزرار بناءً على التصحيح
+            {questions[currentQuestion].options.map(opt => {
               let btnClass = "opt-btn";
               if (selectedAnswer) {
-                if (opt === mockQuestions[currentQuestion].ans) btnClass += " correct";
+                if (opt === questions[currentQuestion].ans) btnClass += " correct";
                 else if (opt === selectedAnswer) btnClass += " wrong";
               }
-
               return (
-                <button 
-                  key={opt} 
-                  className={btnClass} 
-                  onClick={() => !selectedAnswer && handleAnswer(opt)}
-                  disabled={selectedAnswer !== null} // مكنخليوش يورك بزاف المرات
-                >
+                <button key={opt} className={btnClass} onClick={() => !selectedAnswer && handleAnswer(opt)} disabled={selectedAnswer !== null}>
                   {opt}
                 </button>
               )
