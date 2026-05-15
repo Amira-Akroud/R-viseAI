@@ -11,23 +11,23 @@ function App() {
   const [selectedAnswer, setSelectedAnswer] = useState(null)
   const [questions, setQuestions] = useState([])
 
+  // هاد الدالة هي اللي غتربطي فيها مع خديجة من بعد
   const handleUpload = async () => {
-    if (!file) return alert("Sélectionnez un fichier d'abord !")
+    if (!file) return alert("Sélectionnez un fichier PDF !")
     
-    setIsLoading(true) // كيبدا الـ Loading
+    setIsLoading(true)
 
-    // محاكاة للوقت اللي كياخدو الـ AI (مثلا 3 ثواني)
+    // كنحاكيو الوقت اللي كياخد الـ AI (3 ثواني)
     setTimeout(() => {
-      // هنا غادي نحطو من بعد الكود اللي كيجيب الأسئلة من الـ Backend
       const fetchedQuestions = [
         { q: "Qu'est-ce qu'une variable ?", options: ["Un conteneur", "Un fichier", "Un écran"], ans: "Un conteneur" },
         { q: "React est-il une librairie ?", options: ["Oui", "Non", "Peut-être"], ans: "Oui" },
         { q: "JSX signifie quoi ?", options: ["JavaScript XML", "Java Syntax", "JSON X"], ans: "JavaScript XML" }
       ]
       setQuestions(fetchedQuestions)
-      setIsLoading(false) // كيسالي الـ Loading
+      setIsLoading(false)
       setIsQuizMode(true)
-    }, 3000) 
+    }, 3000)
   }
 
   const handleAnswer = (opt) => {
@@ -53,7 +53,7 @@ function App() {
     return (
       <div className="container">
         <div className="loader"></div>
-        <p>L'IA analyse votre PDF et génère le quiz...</p>
+        <p className="loading-text">L'IA analyse votre PDF et génère le quiz...</p>
       </div>
     )
   }
@@ -61,9 +61,12 @@ function App() {
   if (!isQuizMode) {
     return (
       <div className="container">
-        <h1>R-viseAI</h1>
+        <h1 className="logo">R-viseAI</h1>
+        <p>Générez un quiz interactif à partir de vos PDF</p>
         <div className="card">
-          <input type="file" accept=".pdf" onChange={(e) => setFile(e.target.files[0])} />
+          <div className="file-input-wrapper">
+             <input type="file" accept=".pdf" onChange={(e) => setFile(e.target.files[0])} id="file-upload" />
+          </div>
           <button onClick={handleUpload} className="btn-main">Générer le Quiz</button>
         </div>
       </div>
@@ -73,15 +76,16 @@ function App() {
   return (
     <div className="container">
       {showResult ? (
-        <div className="card">
+        <div className="card animate-fade">
           <h2>Résultat Final</h2>
           <div className="score-big">{score} / {questions.length}</div>
-          <button onClick={reset} className="btn-main">Recommencer</button>
+          <p>{score === questions.length ? "Excellent ! 🌟" : "Pas mal ! Continuez à réviser. 💪"}</p>
+          <button onClick={reset} className="btn-main">Réessayer</button>
         </div>
       ) : (
-        <div className="card">
+        <div className="card animate-fade">
           <div className="progress">Question {currentQuestion + 1} sur {questions.length}</div>
-          <h3>{questions[currentQuestion].q}</h3>
+          <h3 className="question-text">{questions[currentQuestion].q}</h3>
           <div className="options">
             {questions[currentQuestion].options.map(opt => {
               let btnClass = "opt-btn";

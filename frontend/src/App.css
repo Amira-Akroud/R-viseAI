@@ -1,11 +1,5 @@
 
-
-#root {
-  width: 100%;
-  margin: 0;
-  display: flex;
-  justify-content: center;
-}
+#root { width: 100%; display: flex; justify-content: center; }
 
 .container {
   max-width: 500px;
@@ -18,117 +12,35 @@
   text-align: center;
 }
 
-h1 {
-  color: #4f46e5;
-  font-size: 2.2rem;
-  margin-bottom: 10px;
-}
+.logo { color: #4f46e5; font-size: 2.5rem; margin-bottom: 5px; }
 
-p {
-  color: #64748b;
-  margin-bottom: 30px;
-}
-
-/* ستيل ديال بلاصة الـ Upload والأسئلة */
-.card {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-/* الزر الأساسي */
 .btn-main {
-  background: #4f46e5;
-  color: white;
-  padding: 16px;
-  border: none;
-  border-radius: 12px;
-  font-weight: bold;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
+  background: #4f46e5; color: white; padding: 16px; border: none;
+  border-radius: 12px; font-weight: bold; cursor: pointer; transition: 0.3s;
 }
 
-.btn-main:hover {
-  background: #4338ca;
-  transform: translateY(-2px);
-}
+.btn-main:hover { background: #4338ca; transform: translateY(-2px); }
 
-/* أزرار الاختيارات في الكويز */
-.options {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  margin-top: 20px;
-}
+.options { display: flex; flex-direction: column; gap: 12px; margin-top: 20px; }
 
 .opt-btn {
-  width: 100%;
-  padding: 16px;
-  border: 2px solid #f1f5f9;
-  border-radius: 14px;
-  background: white;
-  cursor: pointer;
-  font-size: 1rem;
-  transition: all 0.2s ease;
-  text-align: center;
+  width: 100%; padding: 16px; border: 2px solid #f1f5f9; border-radius: 14px;
+  background: white; cursor: pointer; font-size: 1rem; transition: 0.2s;
 }
 
-.opt-btn:hover:not(:disabled) {
-  border-color: #4f46e5;
-  background: #f5f3ff;
-}
+.opt-btn.correct { background-color: #dcfce7 !important; border-color: #22c55e !important; color: #166534; }
+.opt-btn.wrong { background-color: #fee2e2 !important; border-color: #ef4444 !important; color: #991b1b; }
 
-/* ألوان التصحيح (Correct / Wrong) */
-.opt-btn.correct {
-  background-color: #dcfce7 !important;
-  border-color: #22c55e !important;
-  color: #166534;
-  font-weight: bold;
-}
-
-.opt-btn.wrong {
-  background-color: #fee2e2 !important;
-  border-color: #ef4444 !important;
-  color: #991b1b;
-}
-
-/* أرقام النتيجة والتقدم */
-.score-big {
-  font-size: 4rem;
-  color: #4f46e5;
-  font-weight: 800;
-  margin: 20px 0;
-}
-
-.progress {
-  color: #94a3b8;
-  font-size: 0.85rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  margin-bottom: 10px;
-}
-
-.btn-back {
-  background: none;
-  border: none;
-  color: #94a3b8;
-  text-decoration: underline;
-  cursor: pointer;
-  margin-top: 25px;
-}
-/* Spinner Animation */
 .loader {
-  border: 5px solid #f3f3f3;
-  border-top: 5px solid #4f46e5;
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  animation: spin 1s linear infinite;
-  margin: 20px auto;
+  border: 5px solid #f3f3f3; border-top: 5px solid #4f46e5;
+  border-radius: 50%; width: 50px; height: 50px;
+  animation: spin 1s linear infinite; margin: 20px auto;
 }
 
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
+@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+.animate-fade { animation: fadeIn 0.5s ease-in; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+.score-big { font-size: 4rem; color: #4f46e5; font-weight: 800; margin: 10px 0; }
+.loading-text { color: #64748b; font-weight: 500; }
