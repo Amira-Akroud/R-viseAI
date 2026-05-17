@@ -266,3 +266,56 @@ input {
   transform: scale(1.02);
   box-shadow: 0 4px 15px rgba(244, 114, 182, 0.3);
 }
+
+
+
+/* partie mobile */
+.container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+  background: #fdf2f8;
+}
+
+/* card responsive */
+.card-pink, .auth-card {
+  width: 100%;
+  max-width: 500px;
+  background: white;
+  border-radius: 20px;
+  padding: 20px;
+}
+
+/* quiz layout */
+.quiz-content {
+  width: 100%;
+}
+
+/* options buttons */
+.opt-btn-pink {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+/* 📱 mobile fixes */
+@media (max-width: 768px) {
+  .container {
+    padding: 10px;
+    align-items: flex-start;
+  }
+
+  .card-pink, .auth-card {
+    padding: 15px;
+    border-radius: 15px;
+  }
+
+  h1 {
+    font-size: 22px;
+  }
+
+  .btn-green, .btn-logout, .btn-next {
+    width: 100%;
+  }
+}

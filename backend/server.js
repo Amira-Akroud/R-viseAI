@@ -118,3 +118,6 @@ Texte: ${fullText.substring(0, 6000)}`
 
 // ======= START =======
 app.listen(5000, () => console.log("Backend lancé sur http://localhost:5000"));
+app.listen(5000, '0.0.0.0', () => {
+  console.log("Backend running");
+});
