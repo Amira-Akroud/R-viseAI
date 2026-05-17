@@ -18,7 +18,7 @@ body {
   padding: 40px;
   border-radius: 35px;
   box-shadow: 0 15px 45px rgba(0, 0, 0, 0.05);
-  width: 90%;
+  width: 100%;
   max-width: 400px;
   text-align: center;
 }
@@ -290,7 +290,15 @@ input {
 
 /* quiz layout */
 .quiz-content {
+  position: relative;
+  background: white;
+  padding: 50px;
+  border-radius: 35px;
+  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.05);
   width: 100%;
+  max-width: 400px;
+  text-align: center;
+  overflow: hidden;
 }
 
 /* options buttons */
@@ -299,23 +307,3 @@ input {
   margin-bottom: 10px;
 }
 
-/* 📱 mobile fixes */
-@media (max-width: 768px) {
-  .container {
-    padding: 10px;
-    align-items: flex-start;
-  }
-
-  .card-pink, .auth-card {
-    padding: 15px;
-    border-radius: 15px;
-  }
-
-  h1 {
-    font-size: 22px;
-  }
-
-  .btn-green, .btn-logout, .btn-next {
-    width: 100%;
-  }
-}

@@ -2,7 +2,7 @@ import { useState } from 'react'
 import './App.css'
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('token'))
+  const [isLoggedIn, setIsLoggedIn] = useState(null)
   const [isSignUp, setIsSignUp] = useState(false)
   const [isQuizMode, setIsQuizMode] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
@@ -130,7 +130,7 @@ function App() {
         // ======= UPLOAD =======
         <div className="card-pink">
           <h1 className="logo-pink">R-viseAI</h1>
-          <p className="pink-c">Prêt pour votre quiz ? ✨</p>
+          <p className="pink-c">Prêt pour votre quiz ? </p>
           <div className="file-wrapper">
             <label className="file-label" htmlFor="fileInput">
               <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#f472b6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -139,7 +139,7 @@ function App() {
                 <line x1="12" y1="3" x2="12" y2="15"/>
               </svg>
               <span className="file-label-text">
-                {files.length > 0 ? '➕ Ajouter un autre PDF' : 'Choisir des fichiers PDF'}
+                {files.length > 0 ? '+ Ajouter un autre PDF' : 'Choisir des fichiers PDF'}
               </span>
             </label>
             <input id="fileInput" type="file" accept=".pdf" multiple onChange={handleFiles} className="file-input" />
@@ -147,7 +147,7 @@ function App() {
               <div className="file-list">
                 {files.map((f, i) => (
                   <div key={i} className="file-item">
-                    <span>📄 {f.name}</span>
+                    <span>{f.name}</span>
                     <button onClick={() => removeFile(i)} className="file-remove">✕</button>
                   </div>
                 ))}
@@ -183,31 +183,32 @@ function App() {
 
         // ======= QUIZ =======
         <div className="card-pink" key={currentQuestion}>
-          {currentQuestion > 0 && !selectedAnswer && (
-            <button className="btn-back" onClick={() => {
-              setCurrentQuestion(currentQuestion - 1)
-              setSelectedAnswer(null)
-            }}>←</button>
-          )}
+          
           <div className="quiz-content">
-          <div className="progress">Question {currentQuestion + 1} / {questions.length}</div>
-          <h3 className="question-text">{questions[currentQuestion].q}</h3>
-          <div className="options-list">
-            {questions[currentQuestion].options.map(opt => {
-              let clss = "opt-btn-pink"
-              if (selectedAnswer) {
-                if (opt === questions[currentQuestion].ans) clss += " correct"
-                else if (opt === selectedAnswer) clss += " wrong"
-              }
-              return (
-                <button key={opt} className={clss} onClick={() => !selectedAnswer && handleAnswer(opt)}>
-                  {opt}
-                </button>
-              )
-            })}
+            <div className="progress">Question {currentQuestion + 1} / {questions.length}</div>
+            <h3 className="question-text">{questions[currentQuestion].q}</h3>
+            <div className="options-list">
+              {questions[currentQuestion].options.map(opt => {
+                let clss = "opt-btn-pink"
+                if (selectedAnswer) {
+                  if (opt === questions[currentQuestion].ans) clss += " correct"
+                  else if (opt === selectedAnswer) clss += " wrong"
+                }
+                return (
+                  <button key={opt} className={clss} onClick={() => !selectedAnswer && handleAnswer(opt)}>
+                    {opt}
+                  </button>
+                )
+              })}
           </div>
+              {currentQuestion > 0 && !selectedAnswer && (
+                <button className="btn-back" onClick={() => {
+                  setCurrentQuestion(currentQuestion - 1)
+                  setSelectedAnswer(null)
+                }}>←</button>
+              )}
           </div>
-            {selectedAnswer && (
+           
               <button className="btn-next" onClick={() => {
                 setShowWrong(false)
                 if (currentQuestion + 1 < questions.length) {
@@ -219,7 +220,7 @@ function App() {
               }}>
                 {currentQuestion + 1 < questions.length ? 'Suivant ➜' : 'Voir les résultats 🎉'}
               </button>
-            )}
+           
           {showWrong && (
             <div className="wrong-feedback">
               <p className="wrong-feedback-title">❌ Réponse incorrecte !</p>
